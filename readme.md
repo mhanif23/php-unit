@@ -12,7 +12,13 @@ This is a simple PHP program that represents an `Activity` class with various me
 
 1. Clone the repository or download the project files.
 2. Make sure you have [Composer](https://getcomposer.org/) installed.
-3. Install PHPUnit if it's not already installed:
+3. Do Composer Install
+
+```bash
+composer install
+```
+
+4. If you want Install PHPUnit seperately:
 
 ```bash
 composer require --dev phpunit/phpunit
