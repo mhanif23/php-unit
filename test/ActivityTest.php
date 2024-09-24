@@ -2,9 +2,54 @@
 
 use PHPUnit\Framework\TestCase;
 use App\Activity;
+use App\WalkingActivity;
+use App\ReadingActivity;
 
 class ActivityTest extends TestCase
 {
+    public function testAddAndProcessActivities()
+    {
+        $activityManager = new Activity();
+        $walking = new WalkingActivity(5.0, 8000);
+        $reading = new ReadingActivity(50);
+
+        $activityManager->addActivity($walking);
+        $activityManager->addActivity($reading);
+
+        $result = $activityManager->processActivities();
+        
+        $this->assertIsArray($result);
+        $this->assertIsString($result[0]);
+        $this->assertIsString($result[1]);
+    }
+
+    public function testCaloriesBurned()
+    {
+        $activityManager = new Activity();
+        $walking = new WalkingActivity(5.0, 8000);
+
+        $activityManager->addActivity($walking);
+        $calories = $activityManager->getTotalCaloriesBurned();
+
+        $this->assertIsFloat($calories);
+        $this->assertGreaterThan(0, $calories);
+    }
+
+    public function testGetSummary()
+    {
+        $activityManager = new Activity();
+        $walking = new WalkingActivity(5.0, 8000);
+        $reading = new ReadingActivity(50);
+
+        $activityManager->addActivity($walking);
+        $activityManager->addActivity($reading);
+
+        $summary = $activityManager->getSummary();
+        $this->assertIsString($summary);
+        $this->assertStringContainsString("Walking", $summary);
+        $this->assertStringContainsString("Reading", $summary);
+    }
+
     public function testGetActivities()
     {
         $activity = new Activity();
